@@ -22,21 +22,27 @@ public class Almacen {
   }
   
   public int getIndex(int codigo) throws CodigoNoExiste {
-    
-      for(int i=0; i<almacen.size()-1;i++) {
+    boolean existe=false;
+    int i=0;
+     while(i<almacen.size()-1 && !existe) {
+       
       if(almacen.get(i).getCodigo()==codigo) {
-        return i;
+        existe=true;
         }
+      i++;
+      
       }
+     if(!existe) {
       System.out.println("El codigo no coincide con ninguno");
       throw new CodigoNoExiste();
-   
+     }
+     return i;
     
     
   }
   
   public void eliminarArticulo(int codigo) {
-    int i;
+    int i=0;
     try {
       i = getIndex(codigo);
     } catch (CodigoNoExiste e) {
@@ -49,7 +55,7 @@ public class Almacen {
   }
   
   public void reducirStock(int codigo, int cantidad) throws StockInvalidoException {
-    int i;
+    int i=0;
     try {
       i = getIndex(codigo);
     } catch (CodigoNoExiste e) {
@@ -61,7 +67,7 @@ public class Almacen {
   }
   
   public void aumentarStock(int codigo, int cantidad) throws StockInvalidoException {
-    int i;
+    int i=0;
     try {
       i = getIndex(codigo);
     } catch (CodigoNoExiste e) {
@@ -72,7 +78,7 @@ public class Almacen {
   }
   
   public String mostrarArticulo(int codigo) {
-    int i;
+    int i=0;
     try {
       i = getIndex(codigo);
     } catch (CodigoNoExiste e) {

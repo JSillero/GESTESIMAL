@@ -99,7 +99,7 @@ public class Test {
          System.err.println("Descripcion invalida, introduzca una nueva usando la opcion 4.Modificar");
         }
         almacen.altaArticulo(cod, precc, precv, stock, desc);
-        almacen.mostrarArticulo(cod);
+     
       break; 
       
       case(3):
