@@ -6,9 +6,7 @@ public class PRUEBAS {
     // TODO Auto-generated method stub
     int respuesta=0;
     
-    String[] opciones= {"Listar","Agregar","Eliminar","Modificar"};
-    Menu menu = new Menu("GESTESIMAL", opciones );
-    respuesta=menu.mostrar_pedir();
+    
 
   }
 }

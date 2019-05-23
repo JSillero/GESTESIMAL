@@ -15,10 +15,9 @@ public class Almacen {
   public String toString() {
     String cadena="";
     
-    for(int i=0;i<almacen.size()-1;i++)
+    for(int i=0;i<=almacen.size()-1;i++)
       cadena+=("Codigo: "+almacen.get(i).getCodigo()+" Precio compra: "+almacen.get(i).getPCompra()+" Precio venta: "+almacen.get(i).getPVenta()+
-          " Stock:"+almacen.get(i).getStock());
-        
+          " Stock:"+almacen.get(i).getStock()+"\n");
     return cadena;
   }
   

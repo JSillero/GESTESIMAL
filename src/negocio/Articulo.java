@@ -55,8 +55,8 @@ public class Articulo {
   }
   public void setIVA() {
     String[] opciones= {"Normal","Reducido","Super Reducido"};
-    Menu menuIVA = new Menu("IVA",opciones );
-    this.IVA=opciones[menuIVA.mostrar_pedir()];
+    Menu menuIVA = new Menu("IVA",opciones );      
+    this.IVA=opciones[menuIVA.mostrar_pedir()-1];
   }
   public  String getIVA() {
     return this.IVA;
@@ -119,7 +119,7 @@ public class Articulo {
     
     }
     
-      this.precVenta=numero;
+      this.precCompra=numero;
   }
   public double getPVenta() {
     return this.precVenta;
