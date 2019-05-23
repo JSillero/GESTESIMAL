@@ -84,7 +84,7 @@ public class Articulo {
    * @throws StockInvalidoException
    */
   public void alteraStock(int valor) throws StockInvalidoException {
-    if (this.getStock()+valor >0)
+    if (this.getStock()+valor <0)
       throw new StockInvalidoException();
     
     this.setStock((valor+this.getStock()));
@@ -94,7 +94,7 @@ public class Articulo {
     return this.stock;
   }
 
-  private void setPVenta(double precv) {    
+  public void setPVenta(double precv) {    
     double numero=precv;
     while(numero<0) {
       try {
