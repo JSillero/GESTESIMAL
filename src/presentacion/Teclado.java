@@ -32,15 +32,9 @@ public class Teclado {
    * @throws ValorInvalidoException 
    */
   public static String getString(String mensaje) throws ValorInvalidoException {
-    String cadena;
     System.out.println(mensaje);
-    try {
-      cadena=s.nextLine();
-    } catch (Exception e) {
-      throw new ValorInvalidoException();
-
-    }
-    return cadena;
+    
+    return getString();
    
   }
   /**
@@ -66,15 +60,9 @@ public class Teclado {
    * @throws ValorInvalidoException 
    */
   public static int getInt(String mensaje) throws ValorInvalidoException {
-    int number;
     System.out.println(mensaje);
-    try {
-      number=Integer.parseInt(getString());
-    }catch(Exception e) {
-      throw new ValorInvalidoException();
-
-    }
-    return number;
+    
+    return getInt();
     
   }
   /**
@@ -98,17 +86,27 @@ public class Teclado {
    * @throws ValorInvalidoException 
    */
   public static double getDecimal(String mensaje) throws ValorInvalidoException {
-    double number;
     System.out.println(mensaje);
-    try {
-      number=Double.parseDouble(getString());
-    }catch(Exception e) {
-      throw new ValorInvalidoException();
-
-    }
-    return number;
+   
+    return getDecimal();
   }
   
+  public static double getCaracter() throws ValorInvalidoException {
+    char cha;
+    String cadena;
+    cadena=getString();
+    if(cadena.length()!=1)
+      throw new ValorInvalidoException();
+    cha=cadena.charAt(0);
+    
+    return cha;
+  }
   
+  public static double getCaracter(String mensaje) throws ValorInvalidoException {
+    
+    System.out.println(mensaje);
+    
+    return getCaracter();
+  }
   
 }

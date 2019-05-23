@@ -1,4 +1,7 @@
 package negocio;
+import presentacion.Menu;
+import presentacion.Teclado;
+import presentacion.ValorInvalidoException;
 /**
  * Crea la clase articulo como se indica en el ejercicio GESTESIMAL 
  * CON EL AÑADIDO DE IVA QUE ES ENUM.
@@ -26,6 +29,7 @@ public class Articulo {
   private double precCompra;
   private double precVenta;
   private int stock=0;
+  private String IVA="";
   
   
   /**
@@ -40,14 +44,22 @@ public class Articulo {
    * @param desc descripcion
    * @throws StockInvalidoException 
    */
-  public Articulo (int cod,int precc,int precv, int stock, String desc) throws StockInvalidoException {
+  public Articulo (int cod,double precc,double precv, int stock, String desc) throws StockInvalidoException {
     this.setCodigo(cod);
     this.setDesc(desc);
     this.setPCompra(precc);
     this.setPVenta(precv);
     this.setStock(stock);
+    this.setIVA();
     
-    
+  }
+  public void setIVA() {
+    String[] opciones= {"Normal","Reducido","Super Reducido"};
+    Menu menuIVA = new Menu("IVA",opciones );
+    this.IVA=opciones[menuIVA.mostrar_pedir()];
+  }
+  public  String getIVA() {
+    return this.IVA;
   }
   /**
    * 
@@ -61,8 +73,8 @@ public class Articulo {
     
     int safe=this.getStock();
       if(stock2<0) {
-        this.stock=safe;
-        throw new StockInvalidoException() ;
+        this.stock=safe;    
+        throw new StockInvalidoException() ; //ES NECESARIO CREAR Y LANZAR UNA EXCEPCION PARA LOS STOCKS INVALIDOS?????????
       }
     this.stock=stock2;
   }
@@ -72,33 +84,68 @@ public class Articulo {
    * @throws StockInvalidoException
    */
   public void alteraStock(int valor) throws StockInvalidoException {
+    if (this.getStock()+valor >0)
+      throw new StockInvalidoException();
     
     this.setStock((valor+this.getStock()));
   }
 
-  private int getStock() {
-    // TODO Auto-generated method stub
+  public int getStock() {
     return this.stock;
   }
 
   private void setPVenta(double precv) {    
-    if(precv<0)
-      System.out.println("Debe de ser mayor que 0.");
+    double numero=precv;
+    while(numero<0) {
+      try {
+        numero=Teclado.getDecimal("El precio de venta debe de ser mayor que 0.\nIntroduzca un numero valido:");
+      } catch (ValorInvalidoException e) {
+        System.out.println("El numero debe de ser un decimal de dos digitos o un entero");
+      }
+    
+    }
+    
+      this.precVenta=numero;
   }
 
-  private void setPCompra(int precc) {
-    // TODO Auto-generated method stub
+  public void setPCompra(double precc) {
+    double numero=precc;
+    while(numero<0) {
+      try {
+        numero=Teclado.getDecimal("El precio de compra debe de ser mayor que 0.\nIntroduzca un numero valido:");
+      } catch (ValorInvalidoException e) {
+        System.out.println("El numero debe de ser un decimal de dos digitos o un entero");
+      }
     
+    }
+    
+      this.precVenta=numero;
+  }
+  public double getPVenta() {
+    return this.precVenta;
+  }
+  
+  public double getPCompra() {
+    return this.precCompra;
+  }
+  
+  
+  public void setDesc(String desc) {
+    this.descripcion=desc;
+  }
+  
+  public String getDesc() {
+    return this.descripcion;
   }
 
-  private void setDesc(String desc) {
-    // TODO Auto-generated method stub
+  public void setCodigo(int cod) {
+    this.codigo=cod;
     
   }
-
-  private void setCodigo(int cod) {
-    // TODO Auto-generated method stub
-    
+  public int getCodigo() {
+    return this.codigo;
   }
+  
+  
 
 }

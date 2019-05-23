@@ -44,12 +44,14 @@ public class Menu {
    * @return opción válida
    * @throws ValorInvalidoException 
    */
-  public int opciones() throws ValorInvalidoException {
+  public int opciones() {
     int respuesta=-1;
     
     while(respuesta<=0 ||respuesta>(this.opciones.length+1))
-     respuesta=Teclado.getInt("Seleccione una opcion del 1 al "+ (this.opciones.length+1) +"." );
-    
+     try {
+      respuesta=Teclado.getInt("Seleccione una opcion del 1 al "+ (this.opciones.length+1) +"." );
+     }catch (ValorInvalidoException e) {
+     }
     
     return respuesta;
   }
@@ -71,7 +73,7 @@ public class Menu {
    * @return opción introducida por teclado
    * @throws ValorInvalidoException 
    */
-  public int mostrar_pedir() throws ValorInvalidoException {
+  public int mostrar_pedir() {
     this.mostrar();
     return this.opciones();
   }
