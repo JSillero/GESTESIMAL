@@ -33,7 +33,6 @@ public class Teclado {
    */
   public static String getString(String mensaje) throws ValorInvalidoException {
     System.out.println(mensaje);
-    
     return getString();
    
   }
@@ -43,14 +42,14 @@ public class Teclado {
    * @throws ValorInvalidoException 
    */
   public static int getInt() throws ValorInvalidoException {
-    int number;
-    try {
-      number=Integer.parseInt(getString());
-    }catch(Exception e) {
-      throw new ValorInvalidoException();
-
+    int number=0;
+    while(true) {
+      try {
+        return number=Integer.parseInt(getString());
+      }catch(Exception e) {
+        throw new ValorInvalidoException();
+      }
     }
-    return number;
     
   }
   /**
@@ -61,7 +60,6 @@ public class Teclado {
    */
   public static int getInt(String mensaje) throws ValorInvalidoException {
     System.out.println(mensaje);
-    
     return getInt();
     
   }
@@ -74,7 +72,7 @@ public class Teclado {
     double number;
     try {
       number=Double.parseDouble(getString());
-    }catch(Exception e) {
+    }catch(NumberFormatException e) {
       throw new ValorInvalidoException();
     }
     return number;
@@ -87,7 +85,6 @@ public class Teclado {
    */
   public static double getDecimal(String mensaje) throws ValorInvalidoException {
     System.out.println(mensaje);
-   
     return getDecimal();
   }
   
@@ -103,9 +100,7 @@ public class Teclado {
   }
   
   public static double getCaracter(String mensaje) throws ValorInvalidoException {
-    
-    System.out.println(mensaje);
-    
+    System.out.println(mensaje);  
     return getCaracter();
   }
   

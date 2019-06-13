@@ -29,8 +29,8 @@ public class Articulo {
   private double precCompra;
   private double precVenta;
   private int stock=0;
-  private String IVA="";
-  
+  private IVA IVA;
+  private static int cuentacodigo=1; //variable estatica que hace que cada codigo sea unico
   
   /**
    * A la hora de poner nombre a la clase, el  nombre sera igual a su codigo(asi sera hecho en el programa principal)
@@ -43,52 +43,75 @@ public class Articulo {
    * @param stock numero de existencias
    * @param desc descripcion
    * @throws StockInvalidoException 
+   * @throws ValorInvalidoException 
    */
-  public Articulo (int cod,double precc,double precv, int stock, String desc) throws StockInvalidoException {
-    this.setCodigo(cod);
+  public Articulo (double precc,double precv, int stock, String desc) throws StockInvalidoException, ValorInvalidoException {
+    this.codigo=cuentacodigo;
     this.setDesc(desc);
     this.setPCompra(precc);
     this.setPVenta(precv);
-    this.setStock(stock);
+    this.agregaStock(stock);
     this.setIVA();
+    cuentacodigo++; //el nuemro de cada articulo cambia
     
   }
   public void setIVA() {
     String[] opciones= {"Normal","Reducido","Super Reducido"};
     Menu menuIVA = new Menu("IVA",opciones );      
-    this.IVA=opciones[menuIVA.mostrar_pedir()-1];
+    switch(menuIVA.mostrar_pedir()) {
+    case(1):
+      this.IVA=IVA.Normal;
+    break;
+    case(2):
+      this.IVA=IVA.Reducido;
+    break;
+    case(3):
+      this.IVA=IVA.Super_Reducido;
+    break;
+    default:
+      break;
+    }
   }
-  public  String getIVA() {
+  public  IVA getIVA() {
     return this.IVA;
   }
   /**
    * 
-   * Define la cantidad de articulos en inventario, lanza una excepcion en caso de que el numero sea
-   * negativo.
+   * Añade una cantidad indicada por parametro al stock de un articulo
    * 
    * @param stock2
    * @throws StockInvalidoException
    */
-  public void setStock(int stock2) throws StockInvalidoException {
+  public void agregaStock (int stock) throws ValorInvalidoException {
+    if(stock<0)
+      throw new ValorInvalidoException();
     
-    int safe=this.getStock();
-      if(stock2<0) {
-        this.stock=safe;    
-        throw new StockInvalidoException() ; //ES NECESARIO CREAR Y LANZAR UNA EXCEPCION PARA LOS STOCKS INVALIDOS?????????
-      }
-    this.stock=stock2;
+    this.stock+=stock;
+    
+  }
+  
+  /**
+   * 
+   * Se pasa por parametro un nuemero negativo que sera substraido del stock.
+   * 
+   * @param stock2
+   * @throws StockInvalidoException
+   * @throws ValorInvalidoException 
+   */
+  public void substraeStock(int stock) throws StockInvalidoException, ValorInvalidoException {
+    if(stock>0)
+      throw new ValorInvalidoException();
+    if(this.stock+stock<0)
+      throw new StockInvalidoException();
+    
+    this.stock+=stock;
+    
   }
   /**
    * Añade un valor (o substrae si es negativo) para alterar el stock, implementa el metodo setStock
    * @param valor
    * @throws StockInvalidoException
    */
-  public void alteraStock(int valor) throws StockInvalidoException {
-    if (this.getStock()+valor <0)
-      throw new StockInvalidoException();
-    
-    this.setStock((valor+this.getStock()));
-  }
 
   public int getStock() {
     return this.stock;
@@ -102,9 +125,7 @@ public class Articulo {
       } catch (ValorInvalidoException e) {
         System.out.println("El numero debe de ser un decimal de dos digitos o un entero");
       }
-    
     }
-    
       this.precVenta=numero;
   }
 
@@ -121,6 +142,7 @@ public class Articulo {
     
       this.precCompra=numero;
   }
+  
   public double getPVenta() {
     return this.precVenta;
   }
@@ -128,7 +150,6 @@ public class Articulo {
   public double getPCompra() {
     return this.precCompra;
   }
-  
   
   public void setDesc(String desc) {
     this.descripcion=desc;
@@ -138,10 +159,6 @@ public class Articulo {
     return this.descripcion;
   }
 
-  public void setCodigo(int cod) {
-    this.codigo=cod;
-    
-  }
   public int getCodigo() {
     return this.codigo;
   }

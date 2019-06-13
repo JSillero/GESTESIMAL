@@ -1,4 +1,5 @@
 import presentacion.*;
+import negocio.*;
 
 public class PRUEBAS {
 
@@ -6,6 +7,8 @@ public class PRUEBAS {
     // TODO Auto-generated method stub
     int respuesta=0;
     
+    IVA nigga= IVA.Normal;
+    System.out.println(nigga);
     
 
   }

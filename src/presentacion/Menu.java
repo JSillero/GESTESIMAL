@@ -9,6 +9,7 @@ package presentacion;
 public class Menu {
   private String titulo;
   private String[] opciones;
+  private String menu;
   /**
    * Consctructor
    *
@@ -18,13 +19,14 @@ public class Menu {
   public Menu(String tit, String[]opc) {
     this.titulo=tit;
     this.opciones=opc;
+    this.menu=this.crearMenu();
   }
   
   /**
    * Construir el menú y mostrarlo por pantalla, añadiendo siempre una ultima opcion llamada 
    * Salir, que sera destinada en la implementacion a salir del menú.
    */
-  public void mostrar() {
+ private String crearMenu() {
     String menu="";
     menu+=this.titulo;
     menu+="\n ----------------------------";
@@ -34,7 +36,7 @@ public class Menu {
     
     menu+="\n"+(this.opciones.length+1)+".- Salir";
     
-    System.out.println(menu);
+    return menu;
   }
   
   
@@ -45,14 +47,15 @@ public class Menu {
    * @throws ValorInvalidoException 
    */
   public int opciones() {
-    int respuesta=-1;
-    
-    while(respuesta<=0 ||respuesta>(this.opciones.length+1))
-     try {
-      respuesta=Teclado.getInt("Seleccione una opcion del 1 al "+ (this.opciones.length+1) +"." );
-     }catch (ValorInvalidoException e) {
-     }
-    
+    int respuesta=0;
+    do{
+      try {
+        respuesta=-1;
+        respuesta=Teclado.getInt("Seleccione una opcion del 1 al "+ (this.opciones.length+1) +"." );
+      }catch (ValorInvalidoException e) {
+        System.err.println("El valor debe de ser un entero entre 1 y "+ (this.opciones.length+1));
+      }
+    }while(respuesta<=0 ||respuesta>(this.opciones.length+1));
     return respuesta;
   }
   
@@ -74,7 +77,7 @@ public class Menu {
    * @throws ValorInvalidoException 
    */
   public int mostrar_pedir() {
-    this.mostrar();
+    System.out.println(this.menu);
     return this.opciones();
   }
   
